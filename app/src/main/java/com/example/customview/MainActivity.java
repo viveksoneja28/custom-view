@@ -15,8 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.customview.view.CustomView;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -42,39 +40,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        final CustomView customView = new CustomView(this);
-        final CustomView customView = (CustomView) LayoutInflater.from(this).inflate(R.layout.custom_view, null, false);
+//        final CustomView customImageView = new CustomView(this);
+        final View customImageView = LayoutInflater.from(this).inflate(R.layout.custom_view, null, false);
         final ViewGroup container = (ViewGroup) findViewById(R.id.vg_main_container);
 
         findViewById(R.id.btn_add_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //A view cannot have multiple parents, we need to remove it from the first parent, in order to add it again
-                if (customView.getParent() != null) {
-                    container.removeView(customView);
+                if (customImageView.getParent() != null) {
+                    container.removeView(customImageView);
                 }
-                container.addView(customView);
+                container.addView(customImageView);
             }
         });
 
         findViewById(R.id.btn_remove_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                container.removeView(customView);
+                container.removeView(customImageView);
             }
         });
 
         findViewById(R.id.btn_invalidate_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customView.invalidate();
+                customImageView.invalidate();
             }
         });
 
         findViewById(R.id.btn_request_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customView.requestLayout();
+                customImageView.requestLayout();
             }
         });
     }
