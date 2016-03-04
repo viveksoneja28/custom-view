@@ -5,7 +5,10 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -43,15 +46,22 @@ public class CustomImageView extends View{
         bitmap = bitmap.createScaledBitmap(bitmap, 1000, 1000 * bitmap.getHeight() / bitmap.getWidth(), false);
 
         paint = new Paint();
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(30);
-        paint.setStyle(Paint.Style.STROKE);
+//        paint.setColor(Color.BLUE);
+//        paint.setStrokeWidth(30);
+        paint.setStyle(Paint.Style.FILL);
+
+        LinearGradient linearGradient = new LinearGradient(0, 0, 800, 800, new int[] {Color.BLUE, Color.WHITE}, new float[] {0.2f, 0.8f}, Shader.TileMode
+                .CLAMP);
+        Matrix matrix = new Matrix();
+        matrix.setRotate(45);
+        linearGradient.setLocalMatrix(matrix);
+        paint.setShader(linearGradient);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        canvas.drawCircle(500, 500, 400, paint);
-        canvas.drawBitmap(bitmap, 200, 200, paint);
+        canvas.drawCircle(500, 500, 400, paint);
+//        canvas.drawBitmap(bitmap, 200, 200, paint);
     }
 }
