@@ -2,16 +2,18 @@ package com.example.customview;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,6 +39,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+//        final CustomView customImageView = new CustomView(this);
+        final View customImageView = LayoutInflater.from(this).inflate(R.layout.custom_view, null, false);
+        final ViewGroup container = (ViewGroup) findViewById(R.id.vg_main_container);
+
+        findViewById(R.id.btn_add_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //A view cannot have multiple parents, we need to remove it from the first parent, in order to add it again
+                if (customImageView.getParent() != null) {
+                    container.removeView(customImageView);
+                }
+                container.addView(customImageView);
+            }
+        });
+
+        findViewById(R.id.btn_remove_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                container.removeView(customImageView);
+            }
+        });
+
+        findViewById(R.id.btn_invalidate_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customImageView.invalidate();
+            }
+        });
+
+        findViewById(R.id.btn_request_layout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customImageView.requestLayout();
+            }
+        });
     }
 
     @Override
